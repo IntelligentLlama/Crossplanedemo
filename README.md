@@ -7,9 +7,8 @@
 2. Provision Infrastructure per Crossplane pre-made packages, Crossplane yaml manifest
 3. Create another cluster using Crossplane
 4. Test Scenario
-   - Claim your infrastructure: Modifying cluster node zones manually via GCP console
-   - Monitor the change and see how Crossplane brings the zones back to original manifest
-   - Push the wanted changes with github and see Crossplane in action (next version - under constrcution)
+   - Update node configraton and see Crossplane in action
+   - Execute the same with Argos (under Constrcution)
 5. Clean-up 
 
 ### Assumption: Argos and Helm must be installed and configured already in your cluster
