@@ -77,4 +77,17 @@ $ gcloud container clusters create crossplane-demo \
     </p> 
 
 ### 2 - Provision Infrastructure per Crossplane pre-made packages
+- Claim Your Infrastructure:
+  - $ kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/release-1.4/docs/snippets/compose/claim-gcp.yaml
+- Validate: 
+  - $ kubectl get postgresqlinstance my-db ...(repeat multiple times)
+- To watch your provisioned resources become ready:
+  - $ kubectl get crossplane -l crossplane.io/claim-name=my-db
+- Describe command: $ kubectl describe secrets db-conn 
+  - $ kubectl describe secrets db-conn ... sample
+- Consume Your Infrastructure:
+  - $ kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/release-1.4/docs/snippets/compose/pod.yaml
+  - Sample outpout:
+  - ![image](https://user-images.githubusercontent.com/72282458/133360681-97b03fd1-3171-4192-86a7-2ea624150a33.png)
+- Validate PODS: $ kubectl get pods 
 
