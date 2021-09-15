@@ -6,10 +6,11 @@
 1. Installing and configuring Crossplane inside a GCP cluster
 2. Provision Infrastructure per Crossplane pre-made packages, Crossplane yaml manifest
 3. Create another cluster using Crossplane
-4. Test Drifting scenario
+4. Test Scenario
    - Claim your infrastructure: Modifying cluster node zones manually via GCP console
    - Monitor the change and see how Crossplane brings the zones back to original manifest
-   - Push the wanted changes with github and see Crossplane in action
+   - Push the wanted changes with github and see Crossplane in action (next version - under constrcution)
+5. Clean-up 
 
 ### Assumption: Argos and Helm must be installed and configured already in your cluster
 - Helm: [https://helm.sh/]
@@ -91,3 +92,7 @@ $ gcloud container clusters create crossplane-demo \
   - ![image](https://user-images.githubusercontent.com/72282458/133360681-97b03fd1-3171-4192-86a7-2ea624150a33.png)
 - Validate PODS: $ kubectl get pods 
 
+### 3 - Creating a Cluster with Crossplane
+- Git clone:
+  - $ git clone 
+  - $ cd 
