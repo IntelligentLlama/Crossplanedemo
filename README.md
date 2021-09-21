@@ -29,40 +29,52 @@ $ gcloud container clusters create crossplane-demo \
   $ gcloud container clusters get-credentials crossplane-demo --region us-central1 
 
 ### 1 - Installing and Configuring Crossplane
-- setup Project ID: $ PROJECT_ID=chrisboullosa-notepad-dev-864 ... please use your Student ID  <br />
-- Create namespace: $ kubectl create namespace crossplane-system
+- setup Project ID: ``` $ PROJECT_ID=chrisboullosa-notepad-dev-864 ... please use your Student ID  <br /> ```
+- Create namespace: ``` $ kubectl create namespace crossplane-system ```
 - Helm Charts preparation
-  - $ helm repo add crossplane-stable https://charts.crossplane.io/stable
-  - $ helm repo update
-  - $ helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
+ ```
+  $ helm repo add crossplane-stable https://charts.crossplane.io/stable
+  $ helm repo update
+  $ helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
+```  
   - Validating chart and name space
-    - $ helm list -n crossplane-system
-    - $ kubectl get all -n crossplane-system
+  ``` $ helm list -n crossplane-system
+      $ kubectl get all -n crossplane-system
+  ```    
 - Installing Crossplane CLI:
-  - $ curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | sh
-  - Bringing to usr/bin directory: $ sudo mv kubectl-crossplane /usr/bin
-  - Testing binary: $ kubectl crossplane --help
+``` $ curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | sh ```
+  - Bringing to usr/bin directory:``` $ sudo mv kubectl-crossplane /usr/bin ```
+  - Testing binary: ``` $ kubectl crossplane --help ```
 - Install Configuration Package:
-  - $ kubectl crossplane install configuration registry.upbound.io/xp/getting-started-with-gcp:v1.4.1 
-  - validate package: $ watch kubectl get pkg
+  ``` $ kubectl crossplane install configuration registry.upbound.io/xp/getting-started-with-gcp:v1.4.1 
+  - validate package: ``` $ watch kubectl get pkg ```
 - Get GCP Account Keyfile
   - Seeting variables
-    - $ PROJECT_ID=chrisboull-notepad-dev-864 
-    - $ NEW_SA_NAME=test-service-account-name 
+    ```
+    $ PROJECT_ID=chrisboull-notepad-dev-864 
+    $ NEW_SA_NAME=test-service-account-name
+    ```
   - #### create service account
-    - $ SA="${NEW_SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
-    - $ gcloud iam service-accounts create $NEW_SA_NAME --project $PROJECT_ID
+    ```
+    $ SA="${NEW_SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+    $ gcloud iam service-accounts create $NEW_SA_NAME --project $PROJECT_ID
+    ``` 
   - #### enable cloud API
-    - $ SERVICE="sqladmin.googleapis.com"
-    - $ gcloud services enable $SERVICE --project $PROJECT_ID
+    ```
+    $ SERVICE="sqladmin.googleapis.com"
+    $ gcloud services enable $SERVICE --project $PROJECT_ID
+    ```  
   - #### grant access to cloud API
-    - $ ROLE="roles/cloudsql.admin"
-    - $ gcloud projects add-iam-policy-binding --role="$ROLE" $PROJECT_ID --member "serviceAccount:$SA"
+    ```
+    $ ROLE=roles/cloudsql.admin'
+    $ gcloud projects add-iam-policy-binding --role="$ROLE" $PROJECT_ID --member "serviceAccount:$SA"
+    ```
   - #### create service account keyfile
-    - $ gcloud iam service-accounts keys create creds.json --project $PROJECT_ID --iam-account $SA
+    ``` $ gcloud iam service-accounts keys create creds.json --project $PROJECT_ID --iam-account $SA ```
 - Create a Provider Secret
-    - $ kubectl create secret generic gcp-creds -n crossplane-system --from-file=creds=./creds.json
+   ``` $ kubectl create secret generic gcp-creds -n crossplane-system --from-file=creds=./creds.json ```
 -  Configure the Provider: ... copy and pasted in the command prompt:
+```
 <p>
 	echo "apiVersion: gcp.crossplane.io/v1beta1  <br />
  	kind: ProviderConfig <br />
@@ -77,10 +89,10 @@ $ gcloud container clusters create crossplane-demo \
    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;name: gcp-creds<br />
    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;key: creds" | kubectl apply -f - <br /> 
     </p> 
-
+```
 ### 2 - Provision Infrastructure per Crossplane pre-made packages
 - Claim Your Infrastructure:
-  - $ kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/release-1.4/docs/snippets/compose/claim-gcp.yaml
+  ``` $ kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/release-1.4/docs/snippets/compose/claim-gcp.yaml ```
 - Validate: 
   - $ kubectl get postgresqlinstance my-db ...(repeat multiple times)
 - To watch your provisioned resources become ready:
